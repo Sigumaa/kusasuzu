@@ -4,14 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/bwmarrin/discordgo"
 	"github.com/g8rswimmer/go-twitter/v2"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
 )
 
 type authorize struct {
@@ -25,21 +22,11 @@ func (a authorize) Add(req *http.Request) {
 var metaBytes []byte
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if err := godotenv.Load(); err != nil {
+		log.Fatal(err)
 	}
 
-	API_KEY := os.Getenv("API_KEY")
-	API_KEY_SECRET := os.Getenv("API_KEY_SECRET")
-	ACCESS_TOKEN := os.Getenv("ACCESS_TOKEN")
-	ACCESS_TOKEN_SECRET := os.Getenv("ACCESS_TOKEN_SECRET")
 	BEARER_TOKEN := os.Getenv("BEARER_TOKEN")
-	DISCORD_TOKEN := os.Getenv("DISCORD_TOKEN")
-	DISCORD_WEBHOOK := os.Getenv("DISCORD_WEBHOOK")
-	CHANNEL_ID := os.Getenv("CHANNEL_ID")
-	hoge := fmt.Sprintf("%s\n %s\n %s\n %s\n %s\n %s\n %s\n %s\n", API_KEY, API_KEY_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET, BEARER_TOKEN, DISCORD_TOKEN, DISCORD_WEBHOOK, CHANNEL_ID)
-	fmt.Println(hoge)
 
 	client := &twitter.Client{
 		Authorizer: authorize{
